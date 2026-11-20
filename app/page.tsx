@@ -1,69 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Brand, Icon } from "@/components/shared/identity";
+import { publicCapabilities } from "@/lib/public-capabilities";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  return <div className="marketing">
+    <header className="site-header container"><Brand /><nav aria-label="Main navigation"><a href="#platform">The platform</a><a href="#teams">For your team</a><a href="#how-it-works">Our approach</a></nav><Link href="/auth/sign-in" className="button small">Staff sign in <Icon name="arrow" /></Link></header>
+    <main>
+      <section className="hero container">
+        <div className="hero-copy"><span className="eyebrow"><span className="status-dot" /> Connected hospital care</span><h1>Care comes first.<br />Bring everything<br /><em>else together.</em></h1><p>One connected workspace for your people, your patients, and the moments that matter. From the front desk to the next follow-up.</p><div className="hero-actions"><Link href="/auth/get-started" className="button primary">Set up your organisation <Icon name="arrow" /></Link><a href="#how-it-works" className="text-link"><span className="play-icon">▶</span> See how it works</a></div><div className="hero-note"><div className="mini-avatars"><Image src="/images/doctor-team.png" width={35} height={35} alt="" /><span>H</span><span>+</span></div><p>Built around the people<br /><strong>behind better care.</strong></p></div></div>
+        <div className="hero-visual"><div className="photo-backdrop" /><div className="hero-photo"><Image src="/images/doctor-team.png" alt="AI-generated illustration of a Nigerian doctor and clinical team" fill sizes="(max-width: 800px) 90vw, 550px" priority /></div><div className="floating-note note-top"><span className="icon-box teal"><Icon name="heart" /></span><div><strong>Care, connected.</strong><span>Every team on the same page</span></div><span className="check-circle">✓</span></div><div className="portrait-card"><Image src="/images/doctor-team.png" alt="Illustrative clinician portrait" width={180} height={190} /><span><span className="status-dot" /> Here for your team</span></div><div className="floating-note note-bottom"><span className="icon-box blue"><Icon name="calendar" /></span><div><strong>A smoother patient journey</strong><span>Appointment → care → follow-up</span></div></div><span className="photo-caption">Illustrative clinical team</span></div>
+      </section>
+      <section id="platform" className="capability-strip container" aria-label="Platform capabilities">{[["record", "Connected care"], ["calendar", "Teamwork"], ["pharmacy", "Everyday operations"], ["grid", "Patient experience"]].map(([icon, label]) => <div key={label}><Icon name={icon} /><span>{label}</span></div>)}</section>
+      <section id="teams" className="team-section container"><div className="section-heading"><div><span className="eyebrow">One hospital. Every team.</span><h2>The right tools.<br />For every kind of day.</h2></div><p>Give your people a clearer view of the day, with care at the centre.</p></div><div className="team-grid home-capability-grid">{publicCapabilities.map((capability, index) => <Link className="team-card" href={`/capabilities#${capability.id}`} key={capability.id}><span className={`icon-box ${index % 2 ? "teal" : "blue"}`}><Icon name={capability.icon} /></span><h3>{capability.title}</h3><p>{capability.description}</p><span className="team-link">View capabilities <Icon name="arrow" /></span></Link>)}</div></section>
+      <section id="how-it-works" className="journey-section"><div className="container"><div className="section-heading"><div><span className="eyebrow">A connected patient journey</span><h2>Less back and forth.<br />More moving forward.</h2></div><p>Keep the handoff clear as a patient moves between your teams.</p></div><div className="journey-grid">{[["01", "People first", "Make more room for your people and the patients they care for."], ["02", "Working together", "Help your teams feel more connected throughout the working day."], ["03", "Care that continues", "Keep the care experience connected, wherever the day leads."]].map(([step, title, copy]) => <article key={step}><span className="journey-number">{step}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
+      <section className="container"><div className="closing-banner"><div><span className="eyebrow">Make room for better care</span><h2>Your hospital.<br />Working together.</h2><p>Discover a workspace for every member of your team.</p></div><Link href="/auth/get-started" className="button white">Set up your organisation <Icon name="arrow" /></Link></div></section>
+    </main><footer className="site-footer container"><Brand /><p>Connected care. Considered details.</p><Link href="/auth/sign-in">Staff sign in <Icon name="arrow" /></Link><small>Care, connected.</small></footer>
+  </div>;
 }

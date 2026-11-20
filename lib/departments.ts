@@ -1,0 +1,2 @@
+export function departmentKey(name:string){return name.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+export function departmentName(names:string[],value:string|undefined){if(!value)return undefined;let decoded=value;try{decoded=decodeURIComponent(value);}catch{return undefined;}return names.find(name=>name===decoded||departmentKey(name)===decoded.toLowerCase());}
